@@ -7,6 +7,7 @@
         public string Description { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public List<Advertisment> Advertisments { get; set; }
     }
 }
 

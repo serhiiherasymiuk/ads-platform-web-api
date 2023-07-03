@@ -15,6 +15,8 @@ namespace Infrastructure
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new CategoryConfigurations());
+            modelBuilder.ApplyConfiguration(new SubcategoryConfigurations());
+            modelBuilder.ApplyConfiguration(new AdvertismentConfigurations());
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -23,5 +25,7 @@ namespace Infrastructure
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
+        public DbSet<Advertisment> Advertisments { get; set; }
+        public DbSet<AdvertismentImage> AdvertismentImages { get; set; }
     }
 }
