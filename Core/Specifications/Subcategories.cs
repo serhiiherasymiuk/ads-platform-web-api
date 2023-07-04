@@ -18,7 +18,7 @@ namespace Core.Specifications
             public All()
             {
                 Query
-                    .Include(x => x);
+                    .OrderBy(x => x.Advertisments.Count);
             }
         }
         public class ByCategoryId : Specification<Subcategory>

@@ -9,6 +9,7 @@ namespace Core
         public static void AddCustomServices(this IServiceCollection services)
         {
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ISubcategoryService, SubcategoryService>();
         }
     }
 }
