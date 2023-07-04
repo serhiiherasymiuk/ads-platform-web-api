@@ -120,4 +120,7 @@
   <data name="CategoryByIdNotFound" xml:space="preserve">
     <value>Category with requested id not found</value>
   </data>
+  <data name="SubcategoryByIdNotFound" xml:space="preserve">
+    <value>Subcategory with requested id not found</value>
+  </data>
 </root>

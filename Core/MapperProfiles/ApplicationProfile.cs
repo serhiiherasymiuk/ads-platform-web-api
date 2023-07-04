@@ -9,6 +9,8 @@ namespace Core.MapperProfiles
     {
         public ApplicationProfile()
         {
+            CreateMap<Subcategory, SubcategoryDTO>().ReverseMap();
+
             CreateMap<Category, GetCategoryDTO>()
                 .ForMember(dest => dest.Image, opt => opt.Ignore())
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));

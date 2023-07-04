@@ -68,5 +68,14 @@ namespace Core.Resources {
                 return ResourceManager.GetString("CategoryByIdNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subcategory with requested id not found.
+        /// </summary>
+        internal static string SubcategoryByIdNotFound {
+            get {
+                return ResourceManager.GetString("SubcategoryByIdNotFound", resourceCulture);
+            }
+        }
     }
 }
