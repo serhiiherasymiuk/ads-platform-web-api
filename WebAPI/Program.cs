@@ -1,3 +1,4 @@
+using Core;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +9,15 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCustomServices();
+
 builder.Services.AddDbContext(builder.Configuration.GetConnectionString("LocalDb"));
 
 builder.Services.AddRepository();
 
 builder.Services.AddIdentity();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

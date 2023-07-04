@@ -4,10 +4,10 @@ namespace Core.Interfaces
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<CategoryDTO>> GetAll();
-        Task<CategoryDTO?> GetById(int id);
-        Task Create(CategoryDTO category);
-        Task Edit(CategoryDTO category);
+        Task<IEnumerable<GetCategoryDTO>> GetAll();
+        Task<GetCategoryDTO?> GetById(int id);
+        Task Create(CreateCategoryDTO category);
+        Task Edit(CreateCategoryDTO category);
         Task Delete(int id);
     }
 }

@@ -19,34 +19,75 @@ namespace Core.Services
             this.categoriesRepo = categoryRepo;
             this.mapper = mapper;
         }
-        public async Task<IEnumerable<CategoryDTO>> GetAll()
+        public async Task<IEnumerable<GetCategoryDTO>> GetAll()
         {
             var categories = await categoriesRepo.GetAllBySpec(new Categories.All());
-            return mapper.Map<IEnumerable<CategoryDTO>>(categories);
+            return mapper.Map<IEnumerable<GetCategoryDTO>>(categories);
         }
-        public async Task<CategoryDTO?> GetById(int id)
+        public async Task<GetCategoryDTO?> GetById(int id)
         {
             Category category = await categoriesRepo.GetBySpec(new Categories.ById(id));
             if (category == null)
                 throw new HttpException(ErrorMessages.CategoryByIdNotFound, HttpStatusCode.NotFound);
-            return mapper.Map<CategoryDTO>(category);
+            return mapper.Map<GetCategoryDTO>(category);
         }
-        public async Task Edit(CategoryDTO category)
+        public async Task Edit(CreateCategoryDTO category)
         {
-            await categoriesRepo.Update(mapper.Map<Category>(category));
+            var existingCategory = await categoriesRepo.GetByID(category.Id);
+            if (existingCategory == null)
+                throw new HttpException(ErrorMessages.CategoryByIdNotFound, HttpStatusCode.NotFound);
+
+            if (!string.IsNullOrEmpty(existingCategory.Image))
+            {
+                var oldImagePath = Path.Combine("uploads", existingCategory.Image);
+                if (File.Exists(oldImagePath))
+                {
+                    File.Delete(oldImagePath);
+                }
+            }
+
+            var categoryEntity = mapper.Map<Category>(category);
+            if (category.Image != null)
+            {
+                var newImagePath = Path.Combine("uploads", categoryEntity.Image);
+                using (var stream = new FileStream(newImagePath, FileMode.Create))
+                {
+                    await category.Image.CopyToAsync(stream);
+                }
+            }
+
+            await categoriesRepo.Update(categoryEntity);
             await categoriesRepo.Save();
         }
-        public async Task Create(CategoryDTO category)
+        public async Task Create(CreateCategoryDTO category)
         {
-            await categoriesRepo.Insert(mapper.Map<Category>(category));
+            var categoryEntity = mapper.Map<Category>(category);
+
+            var imagePath = Path.Combine("uploads", categoryEntity.Image);
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                await category.Image.CopyToAsync(stream);
+            }
+
+            await categoriesRepo.Insert(categoryEntity);
             await categoriesRepo.Save();
         }
+
         public async Task Delete(int id)
         {
-            if (await categoriesRepo.GetByID(id) == null)
+            var category = await categoriesRepo.GetByID(id);
+            if (category == null)
                 throw new HttpException(ErrorMessages.CategoryByIdNotFound, HttpStatusCode.NotFound);
+
+            var imagePath = Path.Combine("uploads", category.Image);
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+            }
+
             await categoriesRepo.Delete(id);
             await categoriesRepo.Save();
         }
+
     }
 }

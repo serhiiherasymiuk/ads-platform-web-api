@@ -3,6 +3,7 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Infrastructure
 {
@@ -15,7 +16,11 @@ namespace Infrastructure
 
         public static void AddDbContext(this IServiceCollection services, string connStr)
         {
-            services.AddDbContext<AdsPlatformDbContext>(opt => opt.UseSqlServer(connStr));
+            services.AddDbContext<AdsPlatformDbContext>(options =>
+            {
+                options.UseSqlServer(connStr);
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
         }
 
         public static void AddIdentity(this IServiceCollection services)
