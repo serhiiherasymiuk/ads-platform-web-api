@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
         {
             return Ok(await subcategoryService.GetById(id));
         }
-        [HttpGet("getByCategoryId/{userId}")]
+        [HttpGet("getByCategoryId/{categoryId}")]
         public async Task<IActionResult> GetByUserId([FromRoute] int categoryId)
         {
             return Ok(await subcategoryService.GetByCategoryId(categoryId));

@@ -9,4 +9,3 @@
         public List<Subcategory> Subcategories { get; set; }
     }
 }
-

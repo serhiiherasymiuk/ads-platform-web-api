@@ -14,9 +14,9 @@ namespace Core.Services
         private readonly IRepository<Category> categoriesRepo;
         private readonly IMapper mapper;
 
-        public CategoryService(IRepository<Category> categoryRepo, IMapper mapper)
+        public CategoryService(IRepository<Category> categoriesRepo, IMapper mapper)
         {
-            this.categoriesRepo = categoryRepo;
+            this.categoriesRepo = categoriesRepo;
             this.mapper = mapper;
         }
         public async Task<IEnumerable<GetCategoryDTO>> GetAll()
