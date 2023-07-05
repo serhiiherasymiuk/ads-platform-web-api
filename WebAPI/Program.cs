@@ -1,5 +1,6 @@
 using Core;
 using Infrastructure;
+using WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -7,13 +8,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddJWT(builder.Configuration);
 
-builder.Services.AddCustomServices();
+builder.Services.SwagerConfig();
+
+builder.Services.NewtonsoftJsonConfig();
+
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext(builder.Configuration.GetConnectionString("LocalDb"));
 
 builder.Services.AddRepository();
+
+builder.Services.AddCustomServices();
 
 builder.Services.AddIdentity();
 
@@ -29,6 +36,15 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(options =>
+{
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+    options.AllowAnyOrigin();
+});
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

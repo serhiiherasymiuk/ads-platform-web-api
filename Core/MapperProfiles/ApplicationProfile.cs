@@ -9,6 +9,8 @@ namespace Core.MapperProfiles
     {
         public ApplicationProfile()
         {
+            CreateMap<User, UserDTO>().ReverseMap();
+
             CreateMap<Subcategory, SubcategoryDTO>().ReverseMap();
 
             CreateMap<Category, GetCategoryDTO>()
