@@ -11,6 +11,8 @@ namespace Core
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ISubcategoryService, SubcategoryService>();
             services.AddScoped<IAdvertismentService, AdvertismentService>();
+            services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IJwtService, JwtService>();
         }
     }
 }
