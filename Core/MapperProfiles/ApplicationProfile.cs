@@ -16,7 +16,10 @@ namespace Core.MapperProfiles
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
 
             CreateMap<CreateCategoryDTO, Category>()
-                            .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image != null ? src.Image.GetHashCode() + "_" + src.Image.FileName : null));
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image != null ? src.Image.GetHashCode() + "_" + src.Image.FileName : null));
+
+            CreateMap<CreateAdvertismentDTO, Advertisment>()
+                .ForMember(dest => dest.AdvertismentImages, opt => opt.Ignore());
         }
     }
 }
