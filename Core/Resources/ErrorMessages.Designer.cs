@@ -61,6 +61,15 @@ namespace Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advertisment with requested id not found.
+        /// </summary>
+        internal static string AdvertismentByIdNotFound {
+            get {
+                return ResourceManager.GetString("AdvertismentByIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category with requested id not found.
         /// </summary>
         internal static string CategoryByIdNotFound {

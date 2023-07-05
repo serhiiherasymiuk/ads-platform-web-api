@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.DTOs
 {
-    public class AdvertismentDTO
+    public class CreateAdvertismentDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,7 +15,7 @@ namespace Core.DTOs
         public string Location { get; set; }
         public string ContactPerson { get; set; }
         public string ContactPhoneNumber { get; set; }
-        public ICollection<AdvertismentImageDTO>? AdvertismentImages { get; set; }
+        public List<IFormFile>? AdvertismentImages { get; set; }
         public int SubcategoryId { get; set; }
         public int UserId { get; set; }
     }

@@ -10,4 +10,3 @@
         public List<Advertisment> Advertisments { get; set; }
     }
 }
-
