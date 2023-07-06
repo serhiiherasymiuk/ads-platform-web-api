@@ -44,17 +44,5 @@ namespace WebAPI.Controllers
             await usersService.Logout();
             return Ok();
         }
-        [HttpPost("roles/create")]
-        public async Task<IActionResult> CreateRole([FromBody] string roleName)
-        {
-            await usersService.CreateRole(roleName);
-            return Ok();
-        }
-        [HttpPost("roles/addToRole")]
-        public async Task<IActionResult> AddToRole(string userId, string roleName)
-        {
-            await usersService.AddToRole(userId, roleName);
-            return Ok();
-        }
     }
 }

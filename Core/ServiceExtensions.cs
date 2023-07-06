@@ -13,6 +13,7 @@ namespace Core
             services.AddScoped<IAdvertismentService, AdvertismentService>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<IRoleService, RoleService>();
         }
     }
 }

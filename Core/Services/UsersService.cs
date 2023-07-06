@@ -17,36 +17,16 @@ namespace Core.Services
         private readonly SignInManager<User> signInManager;
         private readonly IMapper mapper;
         private readonly IJwtService jwtService;
-        private readonly RoleManager<IdentityRole> roleManager;
 
         public UsersService(UserManager<User> userManager,
                             SignInManager<User> signInManager,
                             IMapper mapper,
-                            IJwtService jwtService,
-                            RoleManager<IdentityRole> roleManager)
+                            IJwtService jwtService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.mapper = mapper;
-            this.jwtService = jwtService;
-            this.roleManager = roleManager;
-        }
-        public async Task CreateRole(string roleName)
-        {
-            if (!await roleManager.RoleExistsAsync(roleName))
-            {
-                var role = new IdentityRole(roleName);
-                await roleManager.CreateAsync(role);
-            }
-        }
-        public async Task AddToRole(string userId, string roleName)
-        {
-            var user = await userManager.FindByIdAsync(userId);
-
-            if (user != null)
-            {
-                await userManager.AddToRoleAsync(user, roleName);
-            }
+            this.jwtService = jwtService;;
         }
         public async Task<IEnumerable<UserDTO>> GetAll()
         {
