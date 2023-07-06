@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Core.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Core.Interfaces
 {
     public interface IJwtService
     {
-        IEnumerable<Claim> GetClaims(IdentityUser user);
+        IEnumerable<Claim> GetClaims(User user);
         string CreateToken(IEnumerable<Claim> claims);
     }
 }

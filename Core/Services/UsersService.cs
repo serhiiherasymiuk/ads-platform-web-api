@@ -17,16 +17,36 @@ namespace Core.Services
         private readonly SignInManager<User> signInManager;
         private readonly IMapper mapper;
         private readonly IJwtService jwtService;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public UsersService(UserManager<User> userManager,
                             SignInManager<User> signInManager,
                             IMapper mapper,
-                            IJwtService jwtService)
+                            IJwtService jwtService,
+                            RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.mapper = mapper;
             this.jwtService = jwtService;
+            this.roleManager = roleManager;
+        }
+        public async Task CreateRole(string roleName)
+        {
+            if (!await roleManager.RoleExistsAsync(roleName))
+            {
+                var role = new IdentityRole(roleName);
+                await roleManager.CreateAsync(role);
+            }
+        }
+        public async Task AddToRole(string userId, string roleName)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user != null)
+            {
+                await userManager.AddToRoleAsync(user, roleName);
+            }
         }
         public async Task<IEnumerable<UserDTO>> GetAll()
         {
@@ -51,8 +71,7 @@ namespace Core.Services
 
             return new LoginResponseDTO()
             {
-                Token = jwtService.CreateToken(jwtService.GetClaims(user)),
-                UserId = user.Id,
+                Token = jwtService.CreateToken(jwtService.GetClaims(user))
             };
         }
 
@@ -79,6 +98,8 @@ namespace Core.Services
 
                 throw new HttpException(message, HttpStatusCode.BadRequest);
             }
+
+            await userManager.AddToRoleAsync(user, "User");
         }
 
         public async Task Delete(string id)
