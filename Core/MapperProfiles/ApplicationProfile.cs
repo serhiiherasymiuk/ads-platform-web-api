@@ -22,6 +22,10 @@ namespace Core.MapperProfiles
 
             CreateMap<CreateAdvertismentDTO, Advertisment>()
                 .ForMember(dest => dest.AdvertismentImages, opt => opt.Ignore());
+
+            CreateMap<Advertisment, GetAdvertismentDTO>().ReverseMap();
+
+            CreateMap<AdvertismentImage, GetAdvertismentImageDTO>().ReverseMap();
         }
     }
 }

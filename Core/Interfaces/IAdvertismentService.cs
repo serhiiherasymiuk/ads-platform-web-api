@@ -8,7 +8,7 @@ namespace Core.Interfaces
         Task<GetAdvertismentDTO?> GetById(int id);
         Task<GetAdvertismentDTO?> GetBySubcategoryId(int subcategoryId);
         Task Create(CreateAdvertismentDTO advertisment);
-        Task Edit(CreateAdvertismentDTO advertisment);
+        Task Edit(int advertismentId, CreateAdvertismentDTO advertisment);
         Task Delete(int id);
     }
 }

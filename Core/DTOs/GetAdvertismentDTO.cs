@@ -15,8 +15,8 @@ namespace Core.DTOs
         public string Location { get; set; }
         public string ContactPerson { get; set; }
         public string ContactPhoneNumber { get; set; }
-        public ICollection<AdvertismentImageDTO>? AdvertismentImages { get; set; }
+        public ICollection<GetAdvertismentImageDTO>? AdvertismentImages { get; set; }
         public int SubcategoryId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

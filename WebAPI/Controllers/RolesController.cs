@@ -14,8 +14,8 @@ namespace WebAPI.Controllers
         {
             this.roleService = roleService;
         }
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateRole([FromRoute] string roleName)
+        [HttpPost]
+        public async Task<IActionResult> CreateRole([FromBody] string roleName)
         {
             await roleService.CreateRole(roleName);
             return Ok();

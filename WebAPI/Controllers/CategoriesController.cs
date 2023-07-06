@@ -32,9 +32,9 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> Edit([FromForm] CreateCategoryDTO category)
+        public async Task<IActionResult> Edit(int categoryId, [FromForm] CreateCategoryDTO category)
         {
-            await categoryService.Edit(category);
+            await categoryService.Edit(categoryId, category);
             return Ok();
         }
         [HttpDelete("{id}")]
