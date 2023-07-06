@@ -26,7 +26,7 @@ namespace Core.Services
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.mapper = mapper;
-            this.jwtService = jwtService;
+            this.jwtService = jwtService;;
         }
         public async Task<IEnumerable<UserDTO>> GetAll()
         {
@@ -51,8 +51,7 @@ namespace Core.Services
 
             return new LoginResponseDTO()
             {
-                Token = jwtService.CreateToken(jwtService.GetClaims(user)),
-                UserId = user.Id,
+                Token = jwtService.CreateToken(jwtService.GetClaims(user))
             };
         }
 
@@ -79,6 +78,8 @@ namespace Core.Services
 
                 throw new HttpException(message, HttpStatusCode.BadRequest);
             }
+
+            await userManager.AddToRoleAsync(user, "User");
         }
 
         public async Task Delete(string id)

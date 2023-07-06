@@ -11,7 +11,7 @@
         public List<AdvertismentImage> AdvertismentImages { get; set; }
         public int SubcategoryId { get; set; }
         public Subcategory Subcategory { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
     }
 }

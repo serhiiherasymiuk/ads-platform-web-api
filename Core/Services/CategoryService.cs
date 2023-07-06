@@ -31,9 +31,9 @@ namespace Core.Services
                 throw new HttpException(ErrorMessages.CategoryByIdNotFound, HttpStatusCode.NotFound);
             return mapper.Map<GetCategoryDTO>(category);
         }
-        public async Task Edit(CreateCategoryDTO category)
+        public async Task Edit(int categoryId, CreateCategoryDTO category)
         {
-            var existingCategory = await categoriesRepo.GetByID(category.Id);
+            var existingCategory = await categoriesRepo.GetByID(categoryId);
             if (existingCategory == null)
                 throw new HttpException(ErrorMessages.CategoryByIdNotFound, HttpStatusCode.NotFound);
 
@@ -47,6 +47,7 @@ namespace Core.Services
             }
 
             var categoryEntity = mapper.Map<Category>(category);
+            categoryEntity.Id = categoryId;
             if (category.Image != null)
             {
                 var newImagePath = Path.Combine("uploads", categoryEntity.Image);

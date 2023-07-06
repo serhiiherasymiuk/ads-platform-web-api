@@ -37,9 +37,9 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> Edit([FromForm] CreateAdvertismentDTO advertisment)
+        public async Task<IActionResult> Edit(int advertismentId, [FromForm] CreateAdvertismentDTO advertisment)
         {
-            await advertismentService.Edit(advertisment);
+            await advertismentService.Edit(advertismentId, advertisment);
             return Ok();
         }
         [HttpDelete("{id}")]

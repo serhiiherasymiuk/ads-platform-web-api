@@ -1,4 +1,5 @@
-﻿using Core.Helpers;
+﻿using Core.Entities;
+using Core.Helpers;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -16,10 +17,12 @@ namespace Core.Services
     public class JwtService : IJwtService
     {
         private readonly IConfiguration configuration;
+        private readonly UserManager<User> userManager;
 
-        public JwtService(IConfiguration configuration)
+        public JwtService(IConfiguration configuration, UserManager<User> userManager)
         {
             this.configuration = configuration;
+            this.userManager = userManager;
         }
 
         public string CreateToken(IEnumerable<Claim> claims)
@@ -38,16 +41,16 @@ namespace Core.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public IEnumerable<Claim> GetClaims(IdentityUser user)
+        public IEnumerable<Claim> GetClaims(User user)
         {
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Name, user.UserName)
             };
 
-            //var roles = userManager.GetRolesAsync(user).Result;
-            //claims.AddRange(roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
+            var roles = userManager.GetRolesAsync(user).Result;
+            claims.AddRange(roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
 
             return claims;
         }

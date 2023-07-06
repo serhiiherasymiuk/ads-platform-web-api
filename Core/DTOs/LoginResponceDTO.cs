@@ -9,6 +9,5 @@ namespace Core.DTOs
     public class LoginResponseDTO
     {
         public string Token { get; set; }
-        public string UserId { get; set; }
     }
 }

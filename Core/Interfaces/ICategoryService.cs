@@ -7,7 +7,7 @@ namespace Core.Interfaces
         Task<IEnumerable<GetCategoryDTO>> GetAll();
         Task<GetCategoryDTO?> GetById(int id);
         Task Create(CreateCategoryDTO category);
-        Task Edit(CreateCategoryDTO category);
+        Task Edit(int categoryId, CreateCategoryDTO category);
         Task Delete(int id);
     }
 }

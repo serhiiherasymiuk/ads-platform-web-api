@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Core.DTOs
 {
-    public class AdvertismentImageDTO
+    public class GetAdvertismentImageDTO
     {
         public int Id { get; set; }
-        public IFormFile Image { get; set; }
+        public string Image { get; set; }
         public int AdvertismentId { get; set; }
     }
 }
