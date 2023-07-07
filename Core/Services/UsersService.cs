@@ -15,32 +15,35 @@ namespace Core.Services
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly IFileStorageService azureStorageService;
         private readonly IMapper mapper;
         private readonly IJwtService jwtService;
 
         public UsersService(UserManager<User> userManager,
                             SignInManager<User> signInManager,
+                            IFileStorageService azureStorageService,
                             IMapper mapper,
                             IJwtService jwtService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.azureStorageService = azureStorageService;
             this.mapper = mapper;
             this.jwtService = jwtService;;
         }
-        public async Task<IEnumerable<UserDTO>> GetAll()
+        public async Task<IEnumerable<GetUserDTO>> GetAll()
         {
             var users = await userManager.Users.ToListAsync();
-            return mapper.Map<IEnumerable<UserDTO>>(users);
+            return mapper.Map<IEnumerable<GetUserDTO>>(users);
         }
-        public async Task<UserDTO> GetById(string id)
+        public async Task<GetUserDTO> GetById(string id)
         {
             var user = await userManager.Users.Where(u => u.Id == id)
                 .FirstOrDefaultAsync();
 
             if (user == null)
                 throw new HttpException(ErrorMessages.UserByIdNotFound, HttpStatusCode.NotFound);
-            return mapper.Map<UserDTO>(user);
+            return mapper.Map<GetUserDTO>(user);
         }
         public async Task<LoginResponseDTO> Login(LoginDTO login)
         {
@@ -88,6 +91,8 @@ namespace Core.Services
             if (user == null)
                 throw new HttpException(ErrorMessages.UserByIdNotFound, HttpStatusCode.NotFound);
 
+            await azureStorageService.DeleteFile("user-images", user.ProfilePicture);
+
             var result = await userManager.DeleteAsync(user);
             if (!result.Succeeded)
             {
@@ -96,11 +101,14 @@ namespace Core.Services
             }
         }
 
-        public async Task Edit(UserDTO userDto)
+        public async Task Edit(string userId, EditUserDTO userDto)
         {
-            var user = await userManager.FindByIdAsync(userDto.Id);
+            var user = await userManager.FindByIdAsync(userId);
             if (user == null)
                 throw new HttpException(ErrorMessages.UserByIdNotFound, HttpStatusCode.NotFound);
+
+            await azureStorageService.EditFile("user-images", user.ProfilePicture, userDto.ProfilePicture);
+
             mapper.Map(userDto, user);
             await userManager.UpdateAsync(user);
         }

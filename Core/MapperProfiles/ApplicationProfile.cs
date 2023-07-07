@@ -9,7 +9,10 @@ namespace Core.MapperProfiles
     {
         public ApplicationProfile()
         {
-            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, GetUserDTO>();
+
+            CreateMap<EditUserDTO, User>()
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom(src => src.ProfilePicture != null ? src.ProfilePicture.GetHashCode() + "_" + src.ProfilePicture.FileName : null));
 
             CreateMap<Subcategory, SubcategoryDTO>().ReverseMap();
 
