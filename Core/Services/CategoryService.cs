@@ -12,11 +12,13 @@ namespace Core.Services
     public class CategoryService : ICategoryService
     {
         private readonly IRepository<Category> categoriesRepo;
+        private readonly IFileStorageService azureStorageService;
         private readonly IMapper mapper;
 
-        public CategoryService(IRepository<Category> categoriesRepo, IMapper mapper)
+        public CategoryService(IRepository<Category> categoriesRepo, IFileStorageService azureStorageService, IMapper mapper)
         {
             this.categoriesRepo = categoriesRepo;
+            this.azureStorageService = azureStorageService;
             this.mapper = mapper;
         }
         public async Task<IEnumerable<GetCategoryDTO>> GetAll()
@@ -37,25 +39,10 @@ namespace Core.Services
             if (existingCategory == null)
                 throw new HttpException(ErrorMessages.CategoryByIdNotFound, HttpStatusCode.NotFound);
 
-            if (!string.IsNullOrEmpty(existingCategory.Image))
-            {
-                var oldImagePath = Path.Combine("uploads", existingCategory.Image);
-                if (File.Exists(oldImagePath))
-                {
-                    File.Delete(oldImagePath);
-                }
-            }
+            await azureStorageService.EditFile("category-images", existingCategory.Image, category.Image);
 
             var categoryEntity = mapper.Map<Category>(category);
             categoryEntity.Id = categoryId;
-            if (category.Image != null)
-            {
-                var newImagePath = Path.Combine("uploads", categoryEntity.Image);
-                using (var stream = new FileStream(newImagePath, FileMode.Create))
-                {
-                    await category.Image.CopyToAsync(stream);
-                }
-            }
 
             await categoriesRepo.Update(categoryEntity);
             await categoriesRepo.Save();
@@ -64,11 +51,7 @@ namespace Core.Services
         {
             var categoryEntity = mapper.Map<Category>(category);
 
-            var imagePath = Path.Combine("uploads", categoryEntity.Image);
-            using (var stream = new FileStream(imagePath, FileMode.Create))
-            {
-                await category.Image.CopyToAsync(stream);
-            }
+            await azureStorageService.UploadFile("category-images", category.Image);
 
             await categoriesRepo.Insert(categoryEntity);
             await categoriesRepo.Save();
@@ -80,11 +63,7 @@ namespace Core.Services
             if (category == null)
                 throw new HttpException(ErrorMessages.CategoryByIdNotFound, HttpStatusCode.NotFound);
 
-            var imagePath = Path.Combine("uploads", category.Image);
-            if (File.Exists(imagePath))
-            {
-                File.Delete(imagePath);
-            }
+            await azureStorageService.DeleteFile("category-images", category.Image);
 
             await categoriesRepo.Delete(id);
             await categoriesRepo.Save();
