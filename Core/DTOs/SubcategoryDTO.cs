@@ -1,12 +1,13 @@
-﻿namespace Core.Entities
+﻿using Core.Entities;
+
+namespace Core.DTOs
 {
-    public class Subcategory
+    public class SubcategoryDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
-        public List<Advertisment> Advertisments { get; set; }
+        public ICollection<GetAdvertismentDTO>? Advertisments { get; set; }
     }
 }

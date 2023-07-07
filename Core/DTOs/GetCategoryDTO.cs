@@ -1,11 +1,14 @@
-﻿namespace Core.Entities
+﻿using Core.Entities;
+using Microsoft.AspNetCore.Http;
+
+namespace Core.DTOs
 {
-    public class Category
+    public class GetCategoryDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
-        public List<Subcategory> Subcategories { get; set; }
+        public ICollection<SubcategoryDTO>? Subcategories { get; set; }
     }
 }
