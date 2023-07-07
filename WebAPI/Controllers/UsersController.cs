@@ -44,5 +44,17 @@ namespace WebAPI.Controllers
             await usersService.Logout();
             return Ok();
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] string id)
+        {
+            await usersService.Delete(id);
+            return Ok();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Edit(string userId, [FromForm] EditUserDTO user)
+        {
+            await usersService.Edit(userId, user);
+            return Ok();
+        }
     }
 }
