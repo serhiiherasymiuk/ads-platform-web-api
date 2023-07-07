@@ -20,14 +20,17 @@ namespace Core.Services
     {
         private readonly IRepository<Advertisment> advertismentsRepo;
         private readonly IRepository<AdvertismentImage> advertismentImagesRepo;
+        private readonly IFileStorageService azureStorageService;
         private readonly IMapper mapper;
 
         public AdvertismentService(IRepository<Advertisment> advertismentsRepo, 
-                                   IRepository<AdvertismentImage> advertismentImagesRepo, 
+                                   IRepository<AdvertismentImage> advertismentImagesRepo,
+                                   IFileStorageService azureStorageService,
                                    IMapper mapper)
         {
             this.advertismentsRepo = advertismentsRepo;
             this.advertismentImagesRepo = advertismentImagesRepo;
+            this.azureStorageService = azureStorageService;
             this.mapper = mapper;
         }
         public async Task<IEnumerable<GetAdvertismentDTO>> GetAll()
@@ -63,12 +66,9 @@ namespace Core.Services
                         Image = imageFile.GetHashCode() + "_" + imageFile.FileName,
                         Advertisment = newAdvertisment
                     };
-                    var imagePath = Path.Combine("uploads", imageEntity.Image);
-                    using (var stream = new FileStream(imagePath, FileMode.Create))
-                    {
-                        await imageFile.CopyToAsync(stream);
-                    }
                     imageEntities.Add(imageEntity);
+
+                    await azureStorageService.UploadFile("advertisment-images", imageFile);
                 }
                 newAdvertisment.AdvertismentImages = imageEntities;
             }
@@ -85,12 +85,7 @@ namespace Core.Services
             {
                 foreach (var image in existingAdvertisment.AdvertismentImages)
                 {
-                    var imagePath = Path.Combine("uploads", image.Image);
-
-                    if (File.Exists(imagePath))
-                    {
-                        File.Delete(imagePath);
-                    }
+                    await azureStorageService.DeleteFile("advertisment-images", image.Image);
 
                     await advertismentImagesRepo.Delete(image.Id);
                 }
@@ -110,12 +105,9 @@ namespace Core.Services
                         Image = imageFile.GetHashCode() + "_" + imageFile.FileName,
                         Advertisment = advertismentEntity
                     };
-                    var imagePath = Path.Combine("uploads", advertismentImage.Image);
-                    using (var stream = new FileStream(imagePath, FileMode.Create))
-                    {
-                        await imageFile.CopyToAsync(stream);
-                    }
                     await advertismentImagesRepo.Insert(advertismentImage);
+
+                    await azureStorageService.UploadFile("advertisment-images", imageFile);
                 }
             }
             await advertismentImagesRepo.Save();
@@ -130,12 +122,7 @@ namespace Core.Services
             {
                 foreach (var image in advertisment.AdvertismentImages)
                 {
-                    var imagePath = Path.Combine("uploads", image.Image);
-
-                    if (File.Exists(imagePath))
-                    {
-                        File.Delete(imagePath);
-                    }
+                    await azureStorageService.DeleteFile("advertisment-images", image.Image);
                 }
             }
 

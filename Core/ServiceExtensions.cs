@@ -8,6 +8,7 @@ namespace Core
     {
         public static void AddCustomServices(this IServiceCollection services)
         {
+            services.AddScoped<IFileStorageService, AzureStorageService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ISubcategoryService, SubcategoryService>();
             services.AddScoped<IAdvertismentService, AdvertismentService>();
