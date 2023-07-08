@@ -36,7 +36,15 @@ namespace Core.Services
                 await userManager.AddToRoleAsync(user, roleName);
             }
         }
+        public async Task RemoveFromRole(string userId, string roleName)
+        {
+            var user = await userManager.FindByIdAsync(userId);
 
+            if (user != null)
+            {
+                await userManager.RemoveFromRoleAsync(user, roleName);
+            }
+        }
         public async Task<IEnumerable<IdentityRole>> GetAll()
         {
             var roles = await roleManager.Roles.ToListAsync();

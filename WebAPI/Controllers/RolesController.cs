@@ -26,6 +26,12 @@ namespace WebAPI.Controllers
             await roleService.AddToRole(userId, roleName);
             return Ok();
         }
+        [HttpPost("removeFromRole")]
+        public async Task<IActionResult> RemoveFromRole(string userId, string roleName)
+        {
+            await roleService.RemoveFromRole(userId, roleName);
+            return Ok();
+        }
         [HttpGet]
         public async Task<IActionResult> Get()
         {
