@@ -10,7 +10,8 @@ namespace Core.Interfaces
 {
     public interface IRoleService
     {
-        Task CreateRole(string roleName);
+        Task Create(string roleName);
+        Task Delete(string roleName);
         Task AddToRole(string userId, string roleName);
         Task RemoveFromRole(string userId, string roleName);
         Task<IEnumerable<IdentityRole>> GetAll();

@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using AutoMapper.Execution;
+using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +20,27 @@ namespace Core.Services
             this.roleManager = roleManager;
             this.userManager = userManager;
         }
-        public async Task CreateRole(string roleName)
+        public async Task Create(string roleName)
         {
             if (!await roleManager.RoleExistsAsync(roleName))
             {
                 var role = new IdentityRole(roleName);
                 await roleManager.CreateAsync(role);
+            }
+        }
+        public async Task Delete(string roleName)
+        {
+            var role = await roleManager.FindByNameAsync(roleName);
+
+            if (role != null)
+            {
+                var usersInRole = await userManager.GetUsersInRoleAsync(role.Name);
+                foreach (var user in usersInRole)
+                {
+                    await userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+
+                await roleManager.DeleteAsync(role);
             }
         }
         public async Task AddToRole(string userId, string roleName)

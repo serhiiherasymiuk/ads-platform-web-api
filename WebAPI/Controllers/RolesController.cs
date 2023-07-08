@@ -15,9 +15,9 @@ namespace WebAPI.Controllers
             this.roleService = roleService;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateRole([FromBody] string roleName)
+        public async Task<IActionResult> Create([FromBody] string roleName)
         {
-            await roleService.CreateRole(roleName);
+            await roleService.Create(roleName);
             return Ok();
         }
         [HttpPost("addToRole")]
@@ -30,6 +30,12 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> RemoveFromRole(string userId, string roleName)
         {
             await roleService.RemoveFromRole(userId, roleName);
+            return Ok();
+        }
+        [HttpDelete("{roleName}")]
+        public async Task<IActionResult> Delete([FromRoute] string roleName)
+        {
+            await roleService.Delete(roleName);
             return Ok();
         }
         [HttpGet]
