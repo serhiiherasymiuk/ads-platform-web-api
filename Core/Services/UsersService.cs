@@ -47,7 +47,7 @@ namespace Core.Services
         }
         public async Task<LoginResponseDTO> Login(LoginDTO login)
         {
-            var user = await userManager.FindByNameAsync(login.Username);
+            var user = await userManager.FindByEmailAsync(login.Email);
             if (user == null || !await userManager.CheckPasswordAsync(user, login.Password))
                 throw new HttpException(ErrorMessages.InvalidCreds, HttpStatusCode.BadRequest);
             await signInManager.SignInAsync(user, true);
@@ -82,7 +82,7 @@ namespace Core.Services
                 throw new HttpException(message, HttpStatusCode.BadRequest);
             }
 
-            await userManager.AddToRoleAsync(user, "User");
+            await userManager.AddToRoleAsync(user, "user");
         }
 
         public async Task Delete(string id)

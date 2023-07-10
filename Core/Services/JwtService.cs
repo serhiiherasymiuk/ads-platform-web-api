@@ -45,14 +45,27 @@ namespace Core.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName)
+                new Claim(CustomClaimTypes.id, user.Id),
+                new Claim(CustomClaimTypes.userName, user.UserName),
+                new Claim(CustomClaimTypes.email, user.Email),
+                new Claim(CustomClaimTypes.profilePicture, user.ProfilePicture ?? ""),
+                new Claim(CustomClaimTypes.registrationDate, user.RegistrationDate.ToString())
             };
 
             var roles = userManager.GetRolesAsync(user).Result;
-            claims.AddRange(roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
+            claims.AddRange(roles.Select(role => new Claim(CustomClaimTypes.roles, role)));
 
             return claims;
         }
+    }
+
+    public static class CustomClaimTypes
+    {
+        public const string id = "id";
+        public const string userName = "userName";
+        public const string email = "email";
+        public const string roles = "roles";
+        public const string profilePicture = "profilePicture";
+        public const string registrationDate = "registrationDate";
     }
 }
