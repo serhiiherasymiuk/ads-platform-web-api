@@ -56,5 +56,15 @@ namespace WebAPI.Controllers
             await usersService.Edit(userId, user);
             return Ok();
         }
+        [HttpGet("checkUsernameExists/{userName}")]
+        public async Task<IActionResult> CheckUsernameExists([FromRoute] string userName)
+        {
+            return Ok(await usersService.CheckUsernameExists(userName));
+        }
+        [HttpGet("checkEmailExists/{email}")]
+        public async Task<IActionResult> CheckEmailExists([FromRoute] string email)
+        {
+            return Ok(await usersService.CheckEmailExists(email));
+        }
     }
 }

@@ -65,6 +65,9 @@ namespace Core.Services
 
         public async Task Register(RegisterDTO register)
         {
+            if (register.Password != register.PasswordConfirmation)
+                throw new HttpException(ErrorMessages.PasswordsNotMatch, HttpStatusCode.BadRequest);
+
             User user = new()
             {
                 UserName = register.UserName,
@@ -111,6 +114,18 @@ namespace Core.Services
 
             mapper.Map(userDto, user);
             await userManager.UpdateAsync(user);
+        }
+
+        public async Task<bool> CheckUsernameExists(string userName)
+        {
+            var user = await userManager.Users.FirstOrDefaultAsync(u => u.UserName == userName);
+            return user != null;
+        }
+
+        public async Task<bool> CheckEmailExists(string email)
+        {
+            var user = await userManager.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return user != null;
         }
     }
 }

@@ -11,5 +11,7 @@ namespace Core.Interfaces
         Task Logout();
         Task Delete(string id);
         Task Edit(string userId, EditUserDTO user);
+        Task<bool> CheckUsernameExists(string userName);
+        Task<bool> CheckEmailExists(string email);
     }
 }

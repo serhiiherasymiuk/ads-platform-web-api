@@ -88,6 +88,15 @@ namespace Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Passwords does not match.
+        /// </summary>
+        internal static string PasswordsNotMatch {
+            get {
+                return ResourceManager.GetString("PasswordsNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subcategory with requested id not found.
         /// </summary>
         internal static string SubcategoryByIdNotFound {

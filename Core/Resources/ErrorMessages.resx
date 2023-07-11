@@ -126,6 +126,9 @@
   <data name="InvalidCreds" xml:space="preserve">
     <value>Invalid login or password</value>
   </data>
+  <data name="PasswordsNotMatch" xml:space="preserve">
+    <value>Passwords does not match</value>
+  </data>
   <data name="SubcategoryByIdNotFound" xml:space="preserve">
     <value>Subcategory with requested id not found</value>
   </data>
