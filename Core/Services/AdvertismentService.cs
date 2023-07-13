@@ -1,7 +1,6 @@
 ﻿using Core.Interfaces;
 using Core.Entities;
 using Core.Specifications;
-using Core.DTOs;
 using AutoMapper;
 using Core.Helpers;
 using System.Net;
@@ -13,6 +12,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Policy;
+using Core.DTOs;
 
 namespace Core.Services
 {

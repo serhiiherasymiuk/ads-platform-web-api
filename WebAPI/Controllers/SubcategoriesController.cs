@@ -31,13 +31,13 @@ namespace WebAPI.Controllers
             return Ok(await subcategoryService.GetByCategoryId(categoryId));
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] SubcategoryDTO subcategory)
+        public async Task<IActionResult> Create([FromForm] CreateSubcategoryDTO subcategory)
         {
             await subcategoryService.Create(subcategory);
             return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> Edit([FromForm] SubcategoryDTO subcategory)
+        public async Task<IActionResult> Edit([FromForm] CreateSubcategoryDTO subcategory)
         {
             await subcategoryService.Edit(subcategory);
             return Ok();

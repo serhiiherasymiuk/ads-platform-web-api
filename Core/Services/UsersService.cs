@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using AutoMapper;
 using Core.Specifications;
+using Core.DTOs;
 
 namespace Core.Services
 {

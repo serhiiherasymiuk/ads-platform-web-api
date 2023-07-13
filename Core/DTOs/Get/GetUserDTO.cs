@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Core.DTOs;
+using Core.Entities;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
 

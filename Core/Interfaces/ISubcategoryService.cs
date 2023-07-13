@@ -4,11 +4,11 @@ namespace Core.Interfaces
 {
     public interface ISubcategoryService
     {
-        Task<IEnumerable<SubcategoryDTO>> GetAll();
-        Task<SubcategoryDTO?> GetById(int id);
-        Task<SubcategoryDTO?> GetByCategoryId(int categoryId);
-        Task Create(SubcategoryDTO subcategory);
-        Task Edit(SubcategoryDTO subcategory);
+        Task<IEnumerable<GetSubcategoryDTO>> GetAll();
+        Task<GetSubcategoryDTO?> GetById(int id);
+        Task<GetSubcategoryDTO?> GetByCategoryId(int categoryId);
+        Task Create(CreateSubcategoryDTO subcategory);
+        Task Edit(CreateSubcategoryDTO subcategory);
         Task Delete(int id);
     }
 }

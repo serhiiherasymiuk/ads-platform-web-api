@@ -1,14 +1,13 @@
 ﻿using Core.Entities;
-using Microsoft.AspNetCore.Http;
 
 namespace Core.DTOs
 {
-    public class GetCategoryDTO
+    public class GetSubcategoryDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Image { get; set; }
-        public ICollection<SubcategoryDTO>? Subcategories { get; set; }
+        public int CategoryId { get; set; }
+        public ICollection<GetAdvertismentDTO>? Advertisments { get; set; }
     }
 }
