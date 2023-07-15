@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using AutoMapper;
-using Core.Specifications;
-using Core.DTOs;
 
 namespace Core.Services
 {
@@ -108,12 +106,16 @@ namespace Core.Services
         public async Task Edit(string userId, EditUserDTO userDto)
         {
             var user = await userManager.FindByIdAsync(userId);
+            string userProfilePricture = user.ProfilePicture;
             if (user == null)
                 throw new HttpException(ErrorMessages.UserByIdNotFound, HttpStatusCode.NotFound);
 
-            await azureStorageService.EditFile("user-images", user.ProfilePicture, userDto.ProfilePicture);
+            if (userDto.ProfilePicture != null)
+                await azureStorageService.EditFile("user-images", user.ProfilePicture, userDto.ProfilePicture);
+            else user.ProfilePicture = userProfilePricture;
 
             mapper.Map(userDto, user);
+
             await userManager.UpdateAsync(user);
         }
 

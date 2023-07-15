@@ -4,13 +4,9 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Services
 {
@@ -48,6 +44,7 @@ namespace Core.Services
                 new Claim(CustomClaimTypes.id, user.Id),
                 new Claim(CustomClaimTypes.userName, user.UserName),
                 new Claim(CustomClaimTypes.email, user.Email),
+                new Claim(CustomClaimTypes.phoneNumber, user.PhoneNumber),
                 new Claim(CustomClaimTypes.profilePicture, user.ProfilePicture ?? ""),
                 new Claim(CustomClaimTypes.registrationDate, user.RegistrationDate.ToString())
             };
@@ -65,6 +62,7 @@ namespace Core.Services
         public const string userName = "userName";
         public const string email = "email";
         public const string roles = "roles";
+        public const string phoneNumber = "phoneNumber";
         public const string profilePicture = "profilePicture";
         public const string registrationDate = "registrationDate";
     }

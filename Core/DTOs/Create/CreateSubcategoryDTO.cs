@@ -1,6 +1,4 @@
-﻿using Core.Entities;
-
-namespace Core.DTOs
+﻿namespace Core.DTOs
 {
     public class CreateSubcategoryDTO
     {

@@ -1,9 +1,6 @@
 ﻿using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Core.DTOs;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using Core.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -51,7 +48,7 @@ namespace WebAPI.Controllers
             await usersService.Delete(id);
             return Ok();
         }
-        [HttpPut]
+        [HttpPut("{userId}")]
         public async Task<IActionResult> Edit(string userId, [FromForm] EditUserDTO user)
         {
             await usersService.Edit(userId, user);

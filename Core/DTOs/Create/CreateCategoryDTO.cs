@@ -1,5 +1,4 @@
-﻿using Core.Entities;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace Core.DTOs
 {

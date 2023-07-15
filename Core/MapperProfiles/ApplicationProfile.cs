@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Core.DTOs;
 using Core.Entities;
-using Microsoft.AspNetCore.Http;
 
 namespace Core.MapperProfiles
 {

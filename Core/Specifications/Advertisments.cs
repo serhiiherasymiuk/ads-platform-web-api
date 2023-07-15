@@ -31,5 +31,15 @@ namespace Core.Specifications
                     .Include(x => x.AdvertismentImages);
             }
         }
+        public class ByCategoryId : Specification<Advertisment>
+        {
+            public ByCategoryId(int categoryId)
+            {
+                Query
+                    .Where(x => x.Subcategory.CategoryId == categoryId)
+                    .Include(x => x.AdvertismentImages);
+            }
+        }
+
     }
 }

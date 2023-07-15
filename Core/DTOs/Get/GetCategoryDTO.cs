@@ -1,7 +1,4 @@
-﻿using Core.Entities;
-using Microsoft.AspNetCore.Http;
-
-namespace Core.DTOs
+﻿namespace Core.DTOs
 {
     public class GetCategoryDTO
     {

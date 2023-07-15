@@ -1,6 +1,4 @@
-﻿using Core.Entities;
-using Microsoft.AspNetCore.Http;
-using System.Text.Json.Serialization;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace Core.DTOs
 {
@@ -8,6 +6,7 @@ namespace Core.DTOs
     {
         public string UserName { get; set; }
         public string Email { get; set; }
-        public IFormFile ProfilePicture { get; set; }
+        public string PhoneNumber { get; set; }
+        public IFormFile? ProfilePicture { get; set; }
     }
 }

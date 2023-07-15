@@ -1,9 +1,4 @@
-﻿using Core.DTOs;
-using Core.Entities;
-using Microsoft.AspNetCore.Http;
-using System.Text.Json.Serialization;
-
-namespace Core.DTOs
+﻿namespace Core.DTOs
 {
     public class GetUserDTO
     {
@@ -11,6 +6,7 @@ namespace Core.DTOs
         public string UserName { get; set; }
         public string Email { get; set; }
         public string ProfilePicture { get; set; }
+        public string? PhoneNumber { get; set; }
         public DateTime RegistrationDate { get; set; }
         public ICollection<GetAdvertismentDTO>? Advertisments { get; set; }
     }
