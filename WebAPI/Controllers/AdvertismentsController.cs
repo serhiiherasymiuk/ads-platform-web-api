@@ -1,6 +1,5 @@
 ﻿using Core.DTOs;
 using Core.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -26,9 +25,14 @@ namespace WebAPI.Controllers
             return Ok(await advertismentService.GetById(id));
         }
         [HttpGet("getBySubcategoryId/{subcategoryId}")]
-        public async Task<IActionResult> GetBySubcategoryId([FromRoute] int advertismentId)
+        public async Task<IActionResult> GetBySubcategoryId([FromRoute] int subcategoryId)
         {
-            return Ok(await advertismentService.GetBySubcategoryId(advertismentId));
+            return Ok(await advertismentService.GetBySubcategoryId(subcategoryId));
+        }
+        [HttpGet("getByCategoryId/{categoryId}")]
+        public async Task<IActionResult> GetByCategoryId([FromRoute] int categoryId)
+        {
+            return Ok(await advertismentService.GetByCategoryId(categoryId));
         }
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateAdvertismentDTO advertisment)

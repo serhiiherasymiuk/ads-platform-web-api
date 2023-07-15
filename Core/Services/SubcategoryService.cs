@@ -1,11 +1,11 @@
 ﻿using Core.Interfaces;
 using Core.Entities;
 using Core.Specifications;
-using Core.DTOs;
 using AutoMapper;
 using Core.Helpers;
 using System.Net;
 using Core.Resources;
+using Core.DTOs;
 
 namespace Core.Services
 {
@@ -19,24 +19,24 @@ namespace Core.Services
             this.subcategoriesRepo = subcategoriesRepo;
             this.mapper = mapper;
         }
-        public async Task<IEnumerable<SubcategoryDTO>> GetAll()
+        public async Task<IEnumerable<GetSubcategoryDTO>> GetAll()
         {
             var subcategories = await subcategoriesRepo.GetAllBySpec(new Subcategories.All());
-            return mapper.Map<IEnumerable<SubcategoryDTO>>(subcategories);
+            return mapper.Map<IEnumerable<GetSubcategoryDTO>>(subcategories);
         }
-        public async Task<SubcategoryDTO?> GetById(int id)
+        public async Task<GetSubcategoryDTO?> GetById(int id)
         {
             Subcategory subcategory = await subcategoriesRepo.GetBySpec(new Subcategories.ById(id));
             if (subcategory == null)
                 throw new HttpException(ErrorMessages.SubcategoryByIdNotFound, HttpStatusCode.NotFound);
-            return mapper.Map<SubcategoryDTO>(subcategory);
+            return mapper.Map<GetSubcategoryDTO>(subcategory);
         }
-        public async Task Edit(SubcategoryDTO subcategory)
+        public async Task Edit(CreateSubcategoryDTO subcategory)
         {
             await subcategoriesRepo.Update(mapper.Map<Subcategory>(subcategory));
             await subcategoriesRepo.Save();
         }
-        public async Task Create(SubcategoryDTO subcategory)
+        public async Task Create(CreateSubcategoryDTO subcategory)
         {
             await subcategoriesRepo.Insert(mapper.Map<Subcategory>(subcategory));
             await subcategoriesRepo.Save();
@@ -50,12 +50,12 @@ namespace Core.Services
             await subcategoriesRepo .Save();
         }
 
-        public async Task<SubcategoryDTO?> GetByCategoryId(int categoryId)
+        public async Task<GetSubcategoryDTO?> GetByCategoryId(int categoryId)
         {
             Subcategory subcategory = await subcategoriesRepo.GetBySpec(new Subcategories.ByCategoryId(categoryId));
             if (subcategory == null)
                 throw new HttpException(ErrorMessages.SubcategoryByIdNotFound, HttpStatusCode.NotFound);
-            return mapper.Map<SubcategoryDTO>(subcategory);
+            return mapper.Map<GetSubcategoryDTO>(subcategory);
         }
     }
 }

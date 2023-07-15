@@ -1,8 +1,6 @@
-﻿using Core.Entities;
-
-namespace Core.DTOs
+﻿namespace Core.DTOs
 {
-    public class SubcategoryDTO
+    public class GetSubcategoryDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,18 +1,11 @@
 ﻿using Core.Interfaces;
 using Core.Entities;
 using Core.Specifications;
-using Core.DTOs;
 using AutoMapper;
 using Core.Helpers;
 using System.Net;
 using Core.Resources;
-using static System.Net.Mime.MediaTypeNames;
-using Ardalis.Specification;
-using Microsoft.AspNetCore.Hosting.Server;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using System.Collections.Generic;
-using System.IO;
-using System.Security.Policy;
+using Core.DTOs;
 
 namespace Core.Services
 {
@@ -45,12 +38,15 @@ namespace Core.Services
                 throw new HttpException(ErrorMessages.AdvertismentByIdNotFound, HttpStatusCode.NotFound);
             return mapper.Map<GetAdvertismentDTO>(advertisment);
         }
-        public async Task<GetAdvertismentDTO?> GetBySubcategoryId(int id)
+        public async Task<IEnumerable<GetAdvertismentDTO>> GetBySubcategoryId(int subcategoryId)
         {
-            Advertisment advertisment = await advertismentsRepo.GetBySpec(new Advertisments.BySubcategoryId(id));
-            if (advertisment == null)
-                throw new HttpException(ErrorMessages.AdvertismentByIdNotFound, HttpStatusCode.NotFound);
-            return mapper.Map<GetAdvertismentDTO>(advertisment);
+            var advertisments = await advertismentsRepo.GetBySpec(new Advertisments.BySubcategoryId(subcategoryId));
+            return mapper.Map<IEnumerable<GetAdvertismentDTO>>(advertisments);
+        }
+        public async Task<IEnumerable<GetAdvertismentDTO>> GetByCategoryId(int categoryId)
+        {
+            var advertisments = await advertismentsRepo.GetAllBySpec(new Advertisments.ByCategoryId(categoryId));
+            return mapper.Map<IEnumerable<GetAdvertismentDTO>>(advertisments);
         }
         public async Task Create(CreateAdvertismentDTO advertisment)
         {
