@@ -9,5 +9,6 @@ namespace Core.Interfaces
         Task AddToRole(string userId, string roleName);
         Task RemoveFromRole(string userId, string roleName);
         Task<IEnumerable<IdentityRole>> GetAll();
+        Task<IEnumerable<string>> GetByUserId(string userId);
     }
 }

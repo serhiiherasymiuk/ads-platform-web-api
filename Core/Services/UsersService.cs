@@ -28,7 +28,7 @@ namespace Core.Services
             this.signInManager = signInManager;
             this.azureStorageService = azureStorageService;
             this.mapper = mapper;
-            this.jwtService = jwtService;;
+            this.jwtService = jwtService;
         }
         public async Task<IEnumerable<GetUserDTO>> GetAll()
         {
@@ -42,7 +42,12 @@ namespace Core.Services
 
             if (user == null)
                 throw new HttpException(ErrorMessages.UserByIdNotFound, HttpStatusCode.NotFound);
-            return mapper.Map<GetUserDTO>(user);
+
+            var userDto = mapper.Map<GetUserDTO>(user);
+
+            userDto.Roles = (List<string>)await userManager.GetRolesAsync(user);
+
+            return userDto;
         }
         public async Task<LoginResponseDTO> Login(LoginDTO login)
         {

@@ -1,7 +1,10 @@
 ﻿using Core.Entities;
+using Core.Helpers;
 using Core.Interfaces;
+using Core.Resources;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace Core.Services
 {
@@ -58,6 +61,15 @@ namespace Core.Services
         public async Task<IEnumerable<IdentityRole>> GetAll()
         {
             var roles = await roleManager.Roles.ToListAsync();
+            return roles;
+        }
+        public async Task<IEnumerable<string>> GetByUserId(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+                throw new HttpException(ErrorMessages.UserByIdNotFound, HttpStatusCode.NotFound);
+
+            var roles = await userManager.GetRolesAsync(user);
             return roles;
         }
     }
