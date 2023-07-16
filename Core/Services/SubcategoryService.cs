@@ -31,9 +31,16 @@ namespace Core.Services
                 throw new HttpException(ErrorMessages.SubcategoryByIdNotFound, HttpStatusCode.NotFound);
             return mapper.Map<GetSubcategoryDTO>(subcategory);
         }
-        public async Task Edit(CreateSubcategoryDTO subcategory)
+        public async Task Edit(int subcategoryId, CreateSubcategoryDTO subcategory)
         {
-            await subcategoriesRepo.Update(mapper.Map<Subcategory>(subcategory));
+            var existingSubcategory = await subcategoriesRepo.GetByID(subcategoryId);
+            if (existingSubcategory == null)
+                throw new HttpException(ErrorMessages.CategoryByIdNotFound, HttpStatusCode.NotFound);
+
+            var subcategoryEntity = mapper.Map<Subcategory>(subcategory);
+            subcategoryEntity.Id = subcategoryId;
+
+            await subcategoriesRepo.Update(subcategoryEntity);
             await subcategoriesRepo.Save();
         }
         public async Task Create(CreateSubcategoryDTO subcategory)
