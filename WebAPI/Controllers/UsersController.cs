@@ -9,7 +9,6 @@ namespace WebAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersService usersService;
-
         public UsersController(IUsersService usersService)
         {
             this.usersService = usersService;

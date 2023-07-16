@@ -1,5 +1,6 @@
 ﻿using Core.DTOs;
 using Core.Interfaces;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -35,10 +36,10 @@ namespace WebAPI.Controllers
             await subcategoryService.Create(subcategory);
             return Ok();
         }
-        [HttpPut]
-        public async Task<IActionResult> Edit([FromForm] CreateSubcategoryDTO subcategory)
+        [HttpPut("{subcategoryId}")]
+        public async Task<IActionResult> Edit(int subcategoryId, [FromForm] CreateSubcategoryDTO subcategory)
         {
-            await subcategoryService.Edit(subcategory);
+            await subcategoryService.Edit(subcategoryId, subcategory);
             return Ok();
         }
         [HttpDelete("{id}")]

@@ -8,7 +8,7 @@ namespace Core.Interfaces
         Task<GetSubcategoryDTO?> GetById(int id);
         Task<GetSubcategoryDTO?> GetByCategoryId(int categoryId);
         Task Create(CreateSubcategoryDTO subcategory);
-        Task Edit(CreateSubcategoryDTO subcategory);
+        Task Edit(int subcategoryId, CreateSubcategoryDTO subcategory);
         Task Delete(int id);
     }
 }

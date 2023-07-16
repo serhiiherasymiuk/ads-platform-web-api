@@ -36,6 +36,11 @@ namespace WebAPI.Controllers
             await roleService.Delete(roleName);
             return Ok();
         }
+        [HttpGet("getByUserId/{userId}")]
+        public async Task<IActionResult> GetByUserId([FromRoute] string userId)
+        {
+            return Ok(await roleService.GetByUserId(userId));
+        }
         [HttpGet]
         public async Task<IActionResult> Get()
         {

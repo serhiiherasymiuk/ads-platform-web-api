@@ -1,5 +1,6 @@
 ﻿using Core.DTOs;
 using Core.Interfaces;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -30,7 +31,7 @@ namespace WebAPI.Controllers
             await categoryService.Create(category);
             return Ok();
         }
-        [HttpPut]
+        [HttpPut("{categoryId}")]
         public async Task<IActionResult> Edit(int categoryId, [FromForm] CreateCategoryDTO category)
         {
             await categoryService.Edit(categoryId, category);
