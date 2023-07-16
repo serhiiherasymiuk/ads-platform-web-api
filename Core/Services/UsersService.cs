@@ -112,9 +112,11 @@ namespace Core.Services
 
             if (userDto.ProfilePicture != null)
                 await azureStorageService.EditFile("user-images", user.ProfilePicture, userDto.ProfilePicture);
-            else user.ProfilePicture = userProfilePricture;
 
             mapper.Map(userDto, user);
+
+            if (userDto.ProfilePicture == null) 
+                user.ProfilePicture = userProfilePricture;
 
             await userManager.UpdateAsync(user);
         }
