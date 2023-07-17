@@ -22,24 +22,14 @@ namespace Core.Specifications
                     .Include(x => x.AdvertismentImages);
             }
         }
-        public class BySubcategoryId : Specification<Advertisment>
-        {
-            public BySubcategoryId(int subcategoryId)
-            {
-                Query
-                    .Where(x => x.SubcategoryId == subcategoryId)
-                    .Include(x => x.AdvertismentImages);
-            }
-        }
         public class ByCategoryId : Specification<Advertisment>
         {
             public ByCategoryId(int categoryId)
             {
                 Query
-                    .Where(x => x.Subcategory.CategoryId == categoryId)
+                    .Where(x => x.CategoryId == categoryId)
                     .Include(x => x.AdvertismentImages);
             }
         }
-
     }
 }

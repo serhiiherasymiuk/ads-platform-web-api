@@ -17,7 +17,7 @@ namespace Infrastructure
         {
             services.AddDbContext<AdsPlatformDbContext>(options =>
             {
-                options.UseSqlServer(connStr);
+                options.UseNpgsql(connStr);
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
         }

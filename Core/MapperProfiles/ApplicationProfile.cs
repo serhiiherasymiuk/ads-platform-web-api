@@ -13,8 +13,6 @@ namespace Core.MapperProfiles
             CreateMap<EditUserDTO, User>()
                 .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom(src => src.ProfilePicture != null ? src.ProfilePicture.GetHashCode() + "_" + src.ProfilePicture.FileName : null));
 
-            CreateMap<Subcategory, GetSubcategoryDTO>().ReverseMap();
-
             CreateMap<Category, GetCategoryDTO>()
                 .ForMember(dest => dest.Image, opt => opt.Ignore())
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
@@ -28,10 +26,6 @@ namespace Core.MapperProfiles
             CreateMap<Advertisment, GetAdvertismentDTO>().ReverseMap();
 
             CreateMap<AdvertismentImage, GetAdvertismentImageDTO>().ReverseMap();
-
-            CreateMap<Subcategory, GetSubcategoryDTO>();
-
-            CreateMap<CreateSubcategoryDTO, Subcategory>();
         }
     }
 }

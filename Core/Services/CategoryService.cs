@@ -26,12 +26,22 @@ namespace Core.Services
             var categories = await categoriesRepo.GetAllBySpec(new Categories.All());
             return mapper.Map<IEnumerable<GetCategoryDTO>>(categories);
         }
+        public async Task<IEnumerable<GetCategoryDTO>> GetHead()
+        {
+            var categories = await categoriesRepo.GetAllBySpec(new Categories.Head());
+            return mapper.Map<IEnumerable<GetCategoryDTO>>(categories);
+        }
         public async Task<GetCategoryDTO?> GetById(int id)
         {
             Category category = await categoriesRepo.GetBySpec(new Categories.ById(id));
             if (category == null)
                 throw new HttpException(ErrorMessages.CategoryByIdNotFound, HttpStatusCode.NotFound);
             return mapper.Map<GetCategoryDTO>(category);
+        }
+        public async Task<IEnumerable<GetCategoryDTO>> GetByParentId(int parentId)
+        {
+            var categories = await categoriesRepo.GetAllBySpec(new Categories.ByParentId(parentId));
+            return mapper.Map<IEnumerable<GetCategoryDTO>>(categories);
         }
         public async Task Edit(int categoryId, CreateCategoryDTO category)
         {

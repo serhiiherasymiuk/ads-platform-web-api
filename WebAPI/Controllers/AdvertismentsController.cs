@@ -24,11 +24,6 @@ namespace WebAPI.Controllers
         {
             return Ok(await advertismentService.GetById(id));
         }
-        [HttpGet("getBySubcategoryId/{subcategoryId}")]
-        public async Task<IActionResult> GetBySubcategoryId([FromRoute] int subcategoryId)
-        {
-            return Ok(await advertismentService.GetBySubcategoryId(subcategoryId));
-        }
         [HttpGet("getByCategoryId/{categoryId}")]
         public async Task<IActionResult> GetByCategoryId([FromRoute] int categoryId)
         {

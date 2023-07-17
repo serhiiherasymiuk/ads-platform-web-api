@@ -10,8 +10,8 @@
         public string ContactPhoneNumber { get; set; }
         public decimal Price { get; set; } 
         public List<AdvertismentImage> AdvertismentImages { get; set; }
-        public int SubcategoryId { get; set; }
-        public Subcategory Subcategory { get; set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
     }

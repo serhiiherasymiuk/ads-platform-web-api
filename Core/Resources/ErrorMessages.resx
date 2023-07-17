@@ -123,14 +123,14 @@
   <data name="CategoryByIdNotFound" xml:space="preserve">
     <value>Category with requested id not found</value>
   </data>
+  <data name="CategoryByParentIdNotFound" xml:space="preserve">
+    <value>Category with requested parentId not found</value>
+  </data>
   <data name="InvalidCreds" xml:space="preserve">
     <value>Invalid login or password</value>
   </data>
   <data name="PasswordsNotMatch" xml:space="preserve">
     <value>Passwords does not match</value>
-  </data>
-  <data name="SubcategoryByIdNotFound" xml:space="preserve">
-    <value>Subcategory with requested id not found</value>
   </data>
   <data name="UserByIdNotFound" xml:space="preserve">
     <value>User with requested id not found</value>

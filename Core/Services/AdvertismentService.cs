@@ -38,11 +38,6 @@ namespace Core.Services
                 throw new HttpException(ErrorMessages.AdvertismentByIdNotFound, HttpStatusCode.NotFound);
             return mapper.Map<GetAdvertismentDTO>(advertisment);
         }
-        public async Task<IEnumerable<GetAdvertismentDTO>> GetBySubcategoryId(int subcategoryId)
-        {
-            var advertisments = await advertismentsRepo.GetBySpec(new Advertisments.BySubcategoryId(subcategoryId));
-            return mapper.Map<IEnumerable<GetAdvertismentDTO>>(advertisments);
-        }
         public async Task<IEnumerable<GetAdvertismentDTO>> GetByCategoryId(int categoryId)
         {
             var advertisments = await advertismentsRepo.GetAllBySpec(new Advertisments.ByCategoryId(categoryId));

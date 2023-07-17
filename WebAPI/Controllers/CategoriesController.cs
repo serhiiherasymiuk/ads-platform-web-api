@@ -25,6 +25,16 @@ namespace WebAPI.Controllers
         {
             return Ok(await categoryService.GetById(id));
         }
+        [HttpGet("getByParentId/{parentId}")]
+        public async Task<IActionResult> GetByParentId([FromRoute] int parentId)
+        {
+            return Ok(await categoryService.GetByParentId(parentId));
+        }
+        [HttpGet("getHead")]
+        public async Task<IActionResult> getHead()
+        {
+            return Ok(await categoryService.GetHead());
+        }
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateCategoryDTO category)
         {
