@@ -43,16 +43,19 @@ namespace Core.Services
             var categories = await categoriesRepo.GetAllBySpec(new Categories.ByParentId(parentId));
             return mapper.Map<IEnumerable<GetCategoryDTO>>(categories);
         }
-        public async Task Edit(int categoryId, CreateCategoryDTO category)
+        public async Task Edit(int categoryId, EditCategoryDTO category)
         {
             var existingCategory = await categoriesRepo.GetByID(categoryId);
             if (existingCategory == null)
                 throw new HttpException(ErrorMessages.CategoryByIdNotFound, HttpStatusCode.NotFound);
 
-            await azureStorageService.EditFile("category-images", existingCategory.Image, category.Image);
-
             var categoryEntity = mapper.Map<Category>(category);
             categoryEntity.Id = categoryId;
+
+            if (category.Image == null)
+                categoryEntity.Image = existingCategory.Image;
+            else 
+                await azureStorageService.EditFile("category-images", existingCategory.Image, category.Image);
 
             await categoriesRepo.Update(categoryEntity);
             await categoriesRepo.Save();

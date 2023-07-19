@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
             await advertismentService.Create(advertisment);
             return Ok();
         }
-        [HttpPut]
+        [HttpPut("{advertismentId}")]
         public async Task<IActionResult> Edit(int advertismentId, [FromForm] CreateAdvertismentDTO advertisment)
         {
             await advertismentService.Edit(advertismentId, advertisment);

@@ -10,7 +10,7 @@
         public string ContactPhoneNumber { get; set; }
         public decimal Price { get; set; }
         public ICollection<GetAdvertismentImageDTO>? AdvertismentImages { get; set; }
-        public int SubcategoryId { get; set; }
+        public int CategoryId { get; set; }
         public string UserId { get; set; }
     }
 }
