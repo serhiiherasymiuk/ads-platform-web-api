@@ -79,6 +79,15 @@ namespace Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category with requested parentId not found.
+        /// </summary>
+        internal static string CategoryByParentIdNotFound {
+            get {
+                return ResourceManager.GetString("CategoryByParentIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid login or password.
         /// </summary>
         internal static string InvalidCreds {
@@ -93,15 +102,6 @@ namespace Core.Resources {
         internal static string PasswordsNotMatch {
             get {
                 return ResourceManager.GetString("PasswordsNotMatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Subcategory with requested id not found.
-        /// </summary>
-        internal static string SubcategoryByIdNotFound {
-            get {
-                return ResourceManager.GetString("SubcategoryByIdNotFound", resourceCulture);
             }
         }
         

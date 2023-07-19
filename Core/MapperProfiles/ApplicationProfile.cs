@@ -11,16 +11,17 @@ namespace Core.MapperProfiles
             CreateMap<User, GetUserDTO>();
 
             CreateMap<EditUserDTO, User>()
-                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom(src => src.ProfilePicture != null ? src.ProfilePicture.GetHashCode() + "_" + src.ProfilePicture.FileName : null));
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom(src => src.ProfilePicture != null ? Path.GetRandomFileName() : null));
 
-            CreateMap<Subcategory, GetSubcategoryDTO>().ReverseMap();
+            CreateMap<EditCategoryDTO, Category>()
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image != null ? Path.GetRandomFileName() : null));
 
             CreateMap<Category, GetCategoryDTO>()
                 .ForMember(dest => dest.Image, opt => opt.Ignore())
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
 
             CreateMap<CreateCategoryDTO, Category>()
-                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image != null ? src.Image.GetHashCode() + "_" + src.Image.FileName : null));
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image != null ? Path.GetRandomFileName() : null));
 
             CreateMap<CreateAdvertismentDTO, Advertisment>()
                 .ForMember(dest => dest.AdvertismentImages, opt => opt.Ignore());
@@ -28,10 +29,6 @@ namespace Core.MapperProfiles
             CreateMap<Advertisment, GetAdvertismentDTO>().ReverseMap();
 
             CreateMap<AdvertismentImage, GetAdvertismentImageDTO>().ReverseMap();
-
-            CreateMap<Subcategory, GetSubcategoryDTO>();
-
-            CreateMap<CreateSubcategoryDTO, Subcategory>();
         }
     }
 }

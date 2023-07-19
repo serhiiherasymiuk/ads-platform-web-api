@@ -38,11 +38,6 @@ namespace Core.Services
                 throw new HttpException(ErrorMessages.AdvertismentByIdNotFound, HttpStatusCode.NotFound);
             return mapper.Map<GetAdvertismentDTO>(advertisment);
         }
-        public async Task<IEnumerable<GetAdvertismentDTO>> GetBySubcategoryId(int subcategoryId)
-        {
-            var advertisments = await advertismentsRepo.GetBySpec(new Advertisments.BySubcategoryId(subcategoryId));
-            return mapper.Map<IEnumerable<GetAdvertismentDTO>>(advertisments);
-        }
         public async Task<IEnumerable<GetAdvertismentDTO>> GetByCategoryId(int categoryId)
         {
             var advertisments = await advertismentsRepo.GetAllBySpec(new Advertisments.ByCategoryId(categoryId));
@@ -59,12 +54,12 @@ namespace Core.Services
                 {
                     var imageEntity = new AdvertismentImage
                     {
-                        Image = imageFile.GetHashCode() + "_" + imageFile.FileName,
+                        Image = Path.GetRandomFileName(),
                         Advertisment = newAdvertisment
                     };
                     imageEntities.Add(imageEntity);
 
-                    await azureStorageService.UploadFile("advertisment-images", imageFile);
+                    await azureStorageService.UploadFile("advertisment-images", imageFile, imageEntity.Image);
                 }
                 newAdvertisment.AdvertismentImages = imageEntities;
             }
@@ -98,12 +93,12 @@ namespace Core.Services
                 {
                     var advertismentImage = new AdvertismentImage
                     {
-                        Image = imageFile.GetHashCode() + "_" + imageFile.FileName,
+                        Image = Path.GetRandomFileName(),
                         Advertisment = advertismentEntity
                     };
                     await advertismentImagesRepo.Insert(advertismentImage);
 
-                    await azureStorageService.UploadFile("advertisment-images", imageFile);
+                    await azureStorageService.UploadFile("advertisment-images", imageFile, advertismentImage.Image);
                 }
             }
             await advertismentImagesRepo.Save();

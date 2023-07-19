@@ -24,11 +24,6 @@ namespace WebAPI.Controllers
         {
             return Ok(await advertismentService.GetById(id));
         }
-        [HttpGet("getBySubcategoryId/{subcategoryId}")]
-        public async Task<IActionResult> GetBySubcategoryId([FromRoute] int subcategoryId)
-        {
-            return Ok(await advertismentService.GetBySubcategoryId(subcategoryId));
-        }
         [HttpGet("getByCategoryId/{categoryId}")]
         public async Task<IActionResult> GetByCategoryId([FromRoute] int categoryId)
         {
@@ -40,7 +35,7 @@ namespace WebAPI.Controllers
             await advertismentService.Create(advertisment);
             return Ok();
         }
-        [HttpPut]
+        [HttpPut("{advertismentId}")]
         public async Task<IActionResult> Edit(int advertismentId, [FromForm] CreateAdvertismentDTO advertisment)
         {
             await advertismentService.Edit(advertismentId, advertisment);

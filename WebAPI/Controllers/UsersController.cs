@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Core.DTOs;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebAPI.Controllers
 {

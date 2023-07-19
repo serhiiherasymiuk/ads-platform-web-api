@@ -77,7 +77,7 @@ namespace Core.Services
                 UserName = register.UserName,
                 Email = register.Email,
                 PhoneNumber = register.PhoneNumber,
-                RegistrationDate = DateTime.Now,
+                RegistrationDate = DateTime.Now.ToUniversalTime(),
             };
 
             var result = await userManager.CreateAsync(user, register.Password);
@@ -111,18 +111,12 @@ namespace Core.Services
         public async Task Edit(string userId, EditUserDTO userDto)
         {
             var user = await userManager.FindByIdAsync(userId);
-            string userProfilePricture = user.ProfilePicture;
-            if (user == null)
-                throw new HttpException(ErrorMessages.UserByIdNotFound, HttpStatusCode.NotFound);
-
-            if (userDto.ProfilePicture != null)
-                await azureStorageService.EditFile("user-images", user.ProfilePicture, userDto.ProfilePicture);
-
+            string oldFileName = user.ProfilePicture;
             mapper.Map(userDto, user);
-
-            if (userDto.ProfilePicture == null) 
-                user.ProfilePicture = userProfilePricture;
-
+            if (userDto.ProfilePicture != null)
+                await azureStorageService.EditFile("user-images", oldFileName, user.ProfilePicture, userDto.ProfilePicture);
+            else
+                user.ProfilePicture = oldFileName;
             await userManager.UpdateAsync(user);
         }
 

@@ -25,6 +25,16 @@ namespace WebAPI.Controllers
         {
             return Ok(await categoryService.GetById(id));
         }
+        [HttpGet("getByParentId/{parentId}")]
+        public async Task<IActionResult> GetByParentId([FromRoute] int parentId)
+        {
+            return Ok(await categoryService.GetByParentId(parentId));
+        }
+        [HttpGet("getHead")]
+        public async Task<IActionResult> GetHead()
+        {
+            return Ok(await categoryService.GetHead());
+        }
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateCategoryDTO category)
         {
@@ -32,7 +42,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("{categoryId}")]
-        public async Task<IActionResult> Edit(int categoryId, [FromForm] CreateCategoryDTO category)
+        public async Task<IActionResult> Edit(int categoryId, [FromForm] EditCategoryDTO category)
         {
             await categoryService.Edit(categoryId, category);
             return Ok();
