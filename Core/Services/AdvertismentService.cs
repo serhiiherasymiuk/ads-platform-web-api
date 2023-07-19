@@ -54,12 +54,12 @@ namespace Core.Services
                 {
                     var imageEntity = new AdvertismentImage
                     {
-                        Image = imageFile.GetHashCode() + "_" + imageFile.FileName,
+                        Image = Path.GetRandomFileName(),
                         Advertisment = newAdvertisment
                     };
                     imageEntities.Add(imageEntity);
 
-                    await azureStorageService.UploadFile("advertisment-images", imageFile);
+                    await azureStorageService.UploadFile("advertisment-images", imageFile, imageEntity.Image);
                 }
                 newAdvertisment.AdvertismentImages = imageEntities;
             }
@@ -93,12 +93,12 @@ namespace Core.Services
                 {
                     var advertismentImage = new AdvertismentImage
                     {
-                        Image = imageFile.GetHashCode() + "_" + imageFile.FileName,
+                        Image = Path.GetRandomFileName(),
                         Advertisment = advertismentEntity
                     };
                     await advertismentImagesRepo.Insert(advertismentImage);
 
-                    await azureStorageService.UploadFile("advertisment-images", imageFile);
+                    await azureStorageService.UploadFile("advertisment-images", imageFile, advertismentImage.Image);
                 }
             }
             await advertismentImagesRepo.Save();

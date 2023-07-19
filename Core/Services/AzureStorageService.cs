@@ -23,20 +23,20 @@ namespace Core.Services
             await blob.DeleteIfExistsAsync();
         }
 
-        public async Task<string> EditFile(string containerName, string oldFileName, IFormFile newFile)
+        public async Task<string> EditFile(string containerName, string oldFileName, string fileName, IFormFile newFile)
         {
             await DeleteFile(containerName, oldFileName);
-            return await UploadFile(containerName, newFile);
+            return await UploadFile(containerName, newFile, fileName);
         }
 
-        public async Task<string> UploadFile(string containerName, IFormFile file)
+        public async Task<string> UploadFile(string containerName, IFormFile file, string fileName)
         {
             var client = new BlobContainerClient(connectionString, containerName);
 
             await client.CreateIfNotExistsAsync();
             await client.SetAccessPolicyAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
 
-            BlobClient blob = client.GetBlobClient(file.GetHashCode() + "_" + file.FileName);
+            BlobClient blob = client.GetBlobClient(fileName);
             await blob.UploadAsync(file.OpenReadStream());
             return blob.Uri.ToString();
         }

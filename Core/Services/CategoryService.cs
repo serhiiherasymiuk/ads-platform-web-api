@@ -55,7 +55,7 @@ namespace Core.Services
             if (category.Image == null)
                 categoryEntity.Image = existingCategory.Image;
             else 
-                await azureStorageService.EditFile("category-images", existingCategory.Image, category.Image);
+                await azureStorageService.EditFile("category-images", existingCategory.Image, categoryEntity.Image, category.Image);
 
             await categoriesRepo.Update(categoryEntity);
             await categoriesRepo.Save();
@@ -64,7 +64,7 @@ namespace Core.Services
         {
             var categoryEntity = mapper.Map<Category>(category);
 
-            await azureStorageService.UploadFile("category-images", category.Image);
+            await azureStorageService.UploadFile("category-images", category.Image, categoryEntity.Image);
 
             await categoriesRepo.Insert(categoryEntity);
             await categoriesRepo.Save();
