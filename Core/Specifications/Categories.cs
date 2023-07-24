@@ -10,7 +10,10 @@ namespace Core.Specifications
             public ById(int id)
             {
                 Query
-                    .Where(x => x.Id == id);
+                    .Where(x => x.Id == id)
+                    .Include(x => x.Subcategories)
+                    .Include(x => x.Advertisements)
+                    .ThenInclude(a => a.AdvertisementImages);
             }
         }
         public class ByParentId : Specification<Category>
@@ -19,6 +22,17 @@ namespace Core.Specifications
             {
                 Query
                     .Where(x => x.ParentId == parentId);
+            }
+        }
+        public class ByName : Specification<Category>
+        {
+            public ByName(string name)
+            {
+                Query
+                    .Where(x => x.Name == name)
+                    .Include(x => x.Subcategories)
+                    .Include(x => x.Advertisements)
+                    .ThenInclude(a => a.AdvertisementImages);
             }
         }
         public class All : Specification<Category>

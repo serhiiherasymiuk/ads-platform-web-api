@@ -5,7 +5,9 @@ using Core.Helpers;
 using Core.Interfaces;
 using Core.Resources;
 using Core.Specifications;
+using Microsoft.IdentityModel.Tokens;
 using System.Net;
+using static Core.Specifications.Advertisements;
 
 namespace Core.Services
 {
@@ -13,18 +15,21 @@ namespace Core.Services
     {
         private readonly IRepository<Advertisement> advertisementsRepo;
         private readonly IRepository<AdvertisementImage> advertisementImagesRepo;
+        private readonly IRepository<Category> categoriesRepo;
         private readonly IFileStorageService azureStorageService;
         private readonly IMapper mapper;
 
         public AdvertisementService(IRepository<Advertisement> advertisementsRepo, 
                                    IRepository<AdvertisementImage> advertisementImagesRepo,
                                    IFileStorageService azureStorageService,
-                                   IMapper mapper)
+                                   IMapper mapper,
+                                   IRepository<Category> categoriesRepo)
         {
             this.advertisementsRepo = advertisementsRepo;
             this.advertisementImagesRepo = advertisementImagesRepo;
             this.azureStorageService = azureStorageService;
             this.mapper = mapper;
+            this.categoriesRepo = categoriesRepo;
         }
         public async Task<IEnumerable<GetAdvertisementDTO>> GetAll()
         {
@@ -143,6 +148,56 @@ namespace Core.Services
                 .ToList();
 
             return mapper.Map<IEnumerable<GetAdvertisementDTO>>(matchingAdvertisments);
+        }
+        private async Task RecursiveSearch(Category currentCategory, List<Advertisement> advertisements)
+        {
+            if (currentCategory.Advertisements != null)
+            {
+                advertisements.AddRange(currentCategory.Advertisements);
+            }
+
+            if (currentCategory.Subcategories.IsNullOrEmpty()) return;
+
+            foreach (var subcategory in currentCategory.Subcategories)
+            {
+                var category = await categoriesRepo.GetBySpec(new Categories.ById(subcategory.Id));
+                await RecursiveSearch(category, advertisements);
+            }
+        }
+        private async Task RecursiveSearchWithQuery(Category currentCategory, List<Advertisement> advertisements, string query)
+        {
+            if (currentCategory.Advertisements != null)
+            {
+                var matching = currentCategory.Advertisements
+                    .Where(a => a.Name.ToLower().Contains(query) || a.Description.ToLower().Contains(query));
+                advertisements.AddRange(matching);
+            }
+
+            if (currentCategory.Subcategories.IsNullOrEmpty()) return;
+
+            foreach (var subcategory in currentCategory.Subcategories)
+            {
+                var category = await categoriesRepo.GetBySpec(new Categories.ById(subcategory.Id));
+                await RecursiveSearchWithQuery(category, advertisements, query);
+            }
+        }
+        public async Task<IEnumerable<GetAdvertisementDTO>> SearchByCategory(string query, string categoryName)
+        {
+            var category = await categoriesRepo.GetBySpec(new Categories.ByName(categoryName));
+
+            var advertisements = new List<Advertisement>();
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                query = query.Trim().ToLower();
+                await RecursiveSearchWithQuery(category, advertisements, query);
+            }
+            else
+            {
+                await RecursiveSearch(category, advertisements);
+            }
+
+            return mapper.Map<IEnumerable<GetAdvertisementDTO>>(advertisements);
         }
     }
 }

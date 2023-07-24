@@ -39,6 +39,16 @@ namespace WebAPI.Controllers
         {
             return Ok(await advertisementService.Search(query));
         }
+        [HttpGet("SearchByCategory/{query}/{categoryName}")]
+        public async Task<IActionResult> SearchByCategory([FromRoute] string query, string categoryName)
+        {
+            return Ok(await advertisementService.SearchByCategory(query, categoryName));
+        }
+        [HttpGet("SearchByCategory/{categoryName}")]
+        public async Task<IActionResult> SearchByCategory([FromRoute] string categoryName)
+        {
+            return Ok(await advertisementService.SearchByCategory(null, categoryName));
+        }
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateAdvertisementDTO advertisement)
         {

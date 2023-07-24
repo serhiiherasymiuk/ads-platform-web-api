@@ -15,7 +15,9 @@ namespace Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasOne(c => c.Parent);
+                .HasMany(c => c.Subcategories)
+                .WithOne(s => s.Parent)
+                .HasForeignKey(c => c.ParentId);
         }
     }
 }

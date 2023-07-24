@@ -12,5 +12,6 @@ namespace Core.Interfaces
         Task Edit(int advertismentId, CreateAdvertisementDTO advertisment);
         Task Delete(int id);
         Task<IEnumerable<GetAdvertisementDTO>> Search(string query);
+        Task<IEnumerable<GetAdvertisementDTO>> SearchByCategory(string query, string categoryName);
     }
 }
