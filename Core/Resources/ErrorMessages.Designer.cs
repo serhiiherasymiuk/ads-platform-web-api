@@ -61,11 +61,11 @@ namespace Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advertisment with requested id not found.
+        ///   Looks up a localized string similar to Advertisement with requested id not found.
         /// </summary>
-        internal static string AdvertismentByIdNotFound {
+        internal static string AdvertisementByIdNotFound {
             get {
-                return ResourceManager.GetString("AdvertismentByIdNotFound", resourceCulture);
+                return ResourceManager.GetString("AdvertisementByIdNotFound", resourceCulture);
             }
         }
         

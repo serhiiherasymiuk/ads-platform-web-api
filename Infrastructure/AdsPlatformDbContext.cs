@@ -15,13 +15,14 @@ namespace Infrastructure
 
             modelBuilder.ApplyConfiguration(new CategoryConfigurations());
             modelBuilder.ApplyConfiguration(new AdvertismentConfigurations());
+            modelBuilder.ApplyConfiguration(new UserConfigurations());
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
         }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Advertisment> Advertisments { get; set; }
-        public DbSet<AdvertismentImage> AdvertismentImages { get; set; }
+        public DbSet<Advertisement> Advertisements { get; set; }
+        public DbSet<AdvertisementImage> AdvertisementImages { get; set; }
     }
 }

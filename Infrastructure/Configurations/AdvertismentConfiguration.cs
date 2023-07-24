@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Configurations
 {
-    public class AdvertismentConfigurations : IEntityTypeConfiguration<Advertisment>
+    public class AdvertismentConfigurations : IEntityTypeConfiguration<Advertisement>
     {
-        public void Configure(EntityTypeBuilder<Advertisment> builder)
+        public void Configure(EntityTypeBuilder<Advertisement> builder)
         {
             builder
-                .HasMany(a => a.AdvertismentImages)
-                .WithOne(i => i.Advertisment)
-                .HasForeignKey(i => i.AdvertismentId)
+                .HasMany(a => a.AdvertisementImages)
+                .WithOne(i => i.Advertisement)
+                .HasForeignKey(i => i.AdvertisementId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

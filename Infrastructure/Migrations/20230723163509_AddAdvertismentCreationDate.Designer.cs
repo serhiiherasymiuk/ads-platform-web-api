@@ -3,6 +3,7 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AdsPlatformDbContext))]
-    partial class AdsPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230723163509_AddAdvertismentCreationDate")]
+    partial class AddAdvertismentCreationDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.Entities.Advertisement", b =>
+            modelBuilder.Entity("Core.Entities.Advertisment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,10 +72,10 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Advertisements");
+                    b.ToTable("Advertisments");
                 });
 
-            modelBuilder.Entity("Core.Entities.AdvertisementImage", b =>
+            modelBuilder.Entity("Core.Entities.AdvertismentImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +83,7 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AdvertisementId")
+                    b.Property<int>("AdvertismentId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Image")
@@ -89,9 +92,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdvertisementId");
+                    b.HasIndex("AdvertismentId");
 
-                    b.ToTable("AdvertisementImages");
+                    b.ToTable("AdvertismentImages");
                 });
 
             modelBuilder.Entity("Core.Entities.Category", b =>
@@ -326,16 +329,16 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Entities.Advertisement", b =>
+            modelBuilder.Entity("Core.Entities.Advertisment", b =>
                 {
                     b.HasOne("Core.Entities.Category", "Category")
-                        .WithMany("Advertisements")
+                        .WithMany("Advertisments")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Entities.User", "User")
-                        .WithMany("Advertisements")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -345,15 +348,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Core.Entities.AdvertisementImage", b =>
+            modelBuilder.Entity("Core.Entities.AdvertismentImage", b =>
                 {
-                    b.HasOne("Core.Entities.Advertisement", "Advertisement")
-                        .WithMany("AdvertisementImages")
-                        .HasForeignKey("AdvertisementId")
+                    b.HasOne("Core.Entities.Advertisment", "Advertisment")
+                        .WithMany("AdvertismentImages")
+                        .HasForeignKey("AdvertismentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Advertisement");
+                    b.Navigation("Advertisment");
                 });
 
             modelBuilder.Entity("Core.Entities.Category", b =>
@@ -416,19 +419,14 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Entities.Advertisement", b =>
+            modelBuilder.Entity("Core.Entities.Advertisment", b =>
                 {
-                    b.Navigation("AdvertisementImages");
+                    b.Navigation("AdvertismentImages");
                 });
 
             modelBuilder.Entity("Core.Entities.Category", b =>
                 {
-                    b.Navigation("Advertisements");
-                });
-
-            modelBuilder.Entity("Core.Entities.User", b =>
-                {
-                    b.Navigation("Advertisements");
+                    b.Navigation("Advertisments");
                 });
 #pragma warning restore 612, 618
         }

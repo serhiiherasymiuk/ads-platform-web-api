@@ -9,6 +9,6 @@
         public string? PhoneNumber { get; set; }
         public List<string> Roles { get; set; }
         public DateTime RegistrationDate { get; set; }
-        public ICollection<GetAdvertismentDTO>? Advertisments { get; set; }
+        public ICollection<GetAdvertisementDTO>? Advertisements { get; set; }
     }
 }

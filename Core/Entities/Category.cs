@@ -8,6 +8,6 @@
         public string Image { get; set; }
         public int? ParentId { get; set; }
         public Category? Parent { get; set; }
-        public List<Advertisment> Advertisments { get; set; }
+        public List<Advertisement> Advertisements { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace Core.DTOs
 {
-    public class GetAdvertismentImageDTO
+    public class GetAdvertisementImageDTO
     {
         public int Id { get; set; }
         public string Image { get; set; }
-        public int AdvertismentId { get; set; }
+        public int AdvertisementId { get; set; }
     }
 }

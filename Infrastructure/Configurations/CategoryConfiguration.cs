@@ -9,7 +9,7 @@ namespace Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder
-                .HasMany(c => c.Advertisments)
+                .HasMany(c => c.Advertisements)
                 .WithOne(a => a.Category)
                 .HasForeignKey(a => a.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);

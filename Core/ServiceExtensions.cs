@@ -10,7 +10,7 @@ namespace Core
         {
             services.AddScoped<IFileStorageService, AzureStorageService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IAdvertismentService, AdvertismentService>();
+            services.AddScoped<IAdvertisementService, AdvertisementService>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IRoleService, RoleService>();
