@@ -30,6 +30,11 @@ namespace WebAPI.Controllers
         {
             return Ok(await categoryService.GetByParentId(parentId));
         }
+        [HttpGet("getByParentName/{parentName}")]
+        public async Task<IActionResult> GetByParentName([FromRoute] string parentName)
+        {
+            return Ok(await categoryService.GetByParentName(parentName));
+        }
         [HttpGet("getHead")]
         public async Task<IActionResult> GetHead()
         {

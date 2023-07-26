@@ -43,6 +43,11 @@ namespace Core.Services
             var categories = await categoriesRepo.GetAllBySpec(new Categories.ByParentId(parentId));
             return mapper.Map<IEnumerable<GetCategoryDTO>>(categories);
         }
+        public async Task<IEnumerable<GetCategoryDTO>> GetByParentName(string parentName)
+        {
+            var categories = await categoriesRepo.GetAllBySpec(new Categories.ByParentName(parentName));
+            return mapper.Map<IEnumerable<GetCategoryDTO>>(categories);
+        }
         public async Task Edit(int categoryId, EditCategoryDTO category)
         {
             var existingCategory = await categoriesRepo.GetByID(categoryId);

@@ -135,4 +135,7 @@
   <data name="UserByIdNotFound" xml:space="preserve">
     <value>User with requested id not found</value>
   </data>
+  <data name="UserByUserNameNotFound" xml:space="preserve">
+    <value>User with requested userName not found</value>
+  </data>
 </root>

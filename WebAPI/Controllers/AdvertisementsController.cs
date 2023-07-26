@@ -34,17 +34,17 @@ namespace WebAPI.Controllers
         {
             return Ok(await advertisementService.GetByCategoryName(categoryName));
         }
-        [HttpGet("Search/{query}")]
+        [HttpGet("search/{query}")]
         public async Task<IActionResult> Search([FromRoute] string query)
         {
             return Ok(await advertisementService.Search(query));
         }
-        [HttpGet("SearchByCategory/{query}/{categoryName}")]
+        [HttpGet("searchByCategory/{query}/{categoryName}")]
         public async Task<IActionResult> SearchByCategory([FromRoute] string query, string categoryName)
         {
             return Ok(await advertisementService.SearchByCategory(query, categoryName));
         }
-        [HttpGet("SearchByCategory/{categoryName}")]
+        [HttpGet("searchByCategory/{categoryName}")]
         public async Task<IActionResult> SearchByCategory([FromRoute] string categoryName)
         {
             return Ok(await advertisementService.SearchByCategory(null, categoryName));

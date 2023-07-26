@@ -113,5 +113,14 @@ namespace Core.Resources {
                 return ResourceManager.GetString("UserByIdNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with requested userName not found.
+        /// </summary>
+        internal static string UserByUserNameNotFound {
+            get {
+                return ResourceManager.GetString("UserByUserNameNotFound", resourceCulture);
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace Core.Interfaces
         Task<IEnumerable<GetCategoryDTO>> GetHead();
         Task<GetCategoryDTO?> GetById(int id);
         Task<IEnumerable<GetCategoryDTO>> GetByParentId(int parentId);
+        Task<IEnumerable<GetCategoryDTO>> GetByParentName(string parentName);
         Task Create(CreateCategoryDTO category);
         Task Edit(int categoryId, EditCategoryDTO category);
         Task Delete(int id);

@@ -160,7 +160,7 @@ namespace Core.Services
 
             foreach (var subcategory in currentCategory.Subcategories)
             {
-                var category = await categoriesRepo.GetBySpec(new Categories.ById(subcategory.Id));
+                var category = await categoriesRepo.GetBySpec(new Categories.ByName(subcategory.Name));
                 await RecursiveSearch(category, advertisements);
             }
         }
@@ -177,7 +177,7 @@ namespace Core.Services
 
             foreach (var subcategory in currentCategory.Subcategories)
             {
-                var category = await categoriesRepo.GetBySpec(new Categories.ById(subcategory.Id));
+                var category = await categoriesRepo.GetBySpec(new Categories.ByName(subcategory.Name));
                 await RecursiveSearchWithQuery(category, advertisements, query);
             }
         }

@@ -49,6 +49,20 @@ namespace Core.Services
 
             return userDto;
         }
+        public async Task<GetUserDTO> GetByUserName(string userName)
+        {
+            var user = await userManager.Users.Where(u => u.UserName == userName)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+                throw new HttpException(ErrorMessages.UserByUserNameNotFound, HttpStatusCode.NotFound);
+
+            var userDto = mapper.Map<GetUserDTO>(user);
+
+            userDto.Roles = (List<string>)await userManager.GetRolesAsync(user);
+
+            return userDto;
+        }
         public async Task<LoginResponseDTO> Login(LoginDTO login)
         {
             var user = await userManager.FindByEmailAsync(login.Email);

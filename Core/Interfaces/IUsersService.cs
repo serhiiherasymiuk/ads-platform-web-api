@@ -6,6 +6,7 @@ namespace Core.Interfaces
     {
         Task<IEnumerable<GetUserDTO>> GetAll();
         Task<GetUserDTO> GetById(string id);
+        Task<GetUserDTO> GetByUserName(string userName);
         Task<LoginResponseDTO> Login(LoginDTO loginDTO);
         Task Register(RegisterDTO registerDTO);
         Task Logout();

@@ -24,6 +24,11 @@ namespace WebAPI.Controllers
         {
             return Ok(await usersService.GetById(id));
         }
+        [HttpGet("getByUserName/{userName}")]
+        public async Task<IActionResult> GetByUserName([FromRoute] string userName)
+        {
+            return Ok(await usersService.GetByUserName(userName));
+        }
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDTO register)
         {
