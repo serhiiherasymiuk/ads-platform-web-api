@@ -43,6 +43,11 @@ namespace Core.Services
                 throw new HttpException(ErrorMessages.AdvertisementByIdNotFound, HttpStatusCode.NotFound);
             return mapper.Map<GetAdvertisementDTO>(advertisement);
         }
+        public async Task<IEnumerable<GetAdvertisementDTO>> GetByUserId(string userId)
+        {
+            var advertisements = await advertisementsRepo.GetAllBySpec(new Advertisements.ByUserId(userId));
+            return mapper.Map<IEnumerable<GetAdvertisementDTO>>(advertisements);
+        }
         public async Task<IEnumerable<GetAdvertisementDTO>> GetByCategoryId(int categoryId)
         {
             var advertisments = await advertisementsRepo.GetAllBySpec(new Advertisements.ByCategoryId(categoryId));

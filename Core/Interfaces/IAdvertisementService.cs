@@ -7,6 +7,7 @@ namespace Core.Interfaces
         Task<IEnumerable<GetAdvertisementDTO>> GetAll();
         Task<GetAdvertisementDTO?> GetById(int id);
         Task<IEnumerable<GetAdvertisementDTO>> GetByCategoryId(int categoryId);
+        Task<IEnumerable<GetAdvertisementDTO>> GetByUserId(string userId);
         Task<IEnumerable<GetAdvertisementDTO>> GetByCategoryName(string categoryName);
         Task Create(CreateAdvertisementDTO advertisment);
         Task Edit(int advertismentId, CreateAdvertisementDTO advertisment);

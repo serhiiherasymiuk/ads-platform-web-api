@@ -29,6 +29,11 @@ namespace WebAPI.Controllers
         {
             return Ok(await advertisementService.GetByCategoryId(categoryId));
         }
+        [HttpGet("getByUserId/{userId}")]
+        public async Task<IActionResult> GetByUserId([FromRoute] string userId)
+        {
+            return Ok(await advertisementService.GetByUserId(userId));
+        }
         [HttpGet("getByCategoryName/{categoryName}")]
         public async Task<IActionResult> GetByCategoryName([FromRoute] string categoryName)
         {
