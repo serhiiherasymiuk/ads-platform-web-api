@@ -16,7 +16,7 @@ builder.Services.NewtonsoftJsonConfig();
 
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext(builder.Configuration.GetConnectionString("LocalDb"));
+builder.Services.AddDbContext(builder.Configuration.GetConnectionString("AzureStorageDb"));
 
 builder.Services.AddRepository();
 

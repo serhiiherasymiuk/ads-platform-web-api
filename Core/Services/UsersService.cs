@@ -92,6 +92,7 @@ namespace Core.Services
                 Email = register.Email,
                 PhoneNumber = register.PhoneNumber,
                 RegistrationDate = DateTime.Now.ToUniversalTime(),
+                ProfilePicture = "user-default-image.png",
             };
 
             var result = await userManager.CreateAsync(user, register.Password);
@@ -112,7 +113,8 @@ namespace Core.Services
             if (user == null)
                 throw new HttpException(ErrorMessages.UserByIdNotFound, HttpStatusCode.NotFound);
 
-            await azureStorageService.DeleteFile("user-images", user.ProfilePicture);
+            if (user.ProfilePicture != "user-default-image.png")
+                await azureStorageService.DeleteFile("user-images", user.ProfilePicture);
 
             var result = await userManager.DeleteAsync(user);
             if (!result.Succeeded)
